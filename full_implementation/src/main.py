@@ -175,7 +175,7 @@ def get_price(date_time, import_prices, export_prices):
     if ":15:" in date_string:
         temp_date = temp_date.replace(":15:", ":00:")
     if ":45:" in date_string:
-        temp_date = temp_date.replace(":45:", ":00:")
+        temp_date = temp_date.replace(":45:", ":30:")
 
     if "T24:00:00Z" in temp_date:
         temp_date = temp_date.replace("T24:00:00Z", "T00:00:00Z")
@@ -186,8 +186,10 @@ def get_price(date_time, import_prices, export_prices):
         export_price = export_prices[temp_date]
     except: # if we cannot find the price for today lets get yesterdays price
         minutes_required = temp_date.split("T")[1]
+        yesterday = (date.today() - timedelta(days=1)).strftime("%Y-%m-%dT")
+        lookup = yesterday + minutes_required
         for key in import_prices.keys():
-            if minutes_required in key:
+            if lookup == key:
                 import_price = import_prices[key]
                 export_price = export_prices[key]
     
