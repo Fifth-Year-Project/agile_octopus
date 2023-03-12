@@ -49,33 +49,33 @@ def get_15_min_list():
     for i in range(0,2400,100): # for each hour in the next 24 hours
         temp_hour = starting_hour + i # increasingly itterating the hours 
         if starting_minute < 15: # if we are in the first quarter of the hour at initial run time
+            last_full = temp_hour
             plus_quarter = temp_hour + 15 # the first time we want to schedule for will be quarter past the hour
             plus_half = temp_hour + 30 
             plus_three_quarter = temp_hour + 45
-            plus_full = temp_hour + 100
 
+            if last_full > 2400:
+                last_full = str(last_full - 2400)  + "_tomorrow"
             if plus_quarter > 2400: # if we have gone into tomorrow
                 plus_quarter = str(plus_quarter - 2400) + "_tomorrow" # signify that we are in tomorrow by using
             if plus_half > 2400:
                 plus_half = str(plus_half - 2400) + "_tomorrow"
             if plus_three_quarter > 2400:
                 plus_three_quarter = str(plus_three_quarter - 2400)  + "_tomorrow"
-            if plus_full > 2400:
-                plus_full = str(plus_full - 2400)  + "_tomorrow"
 
+            date_times.append(str(last_full))
             date_times.append(str(plus_quarter))
             date_times.append(str(plus_half))
             date_times.append(str(plus_three_quarter))
-            date_times.append(str(plus_full))
 
         if starting_minute >= 15 and starting_minute < 30: # if we are in the second quarter of the hour at run time
+            last_quarter = temp_hour + 15
             plus_half = temp_hour + 30 # the first time we want to schedule the output for is at half past the hour
             plus_three_quarter = temp_hour + 45
             plus_full = temp_hour + 100
-            plus_quarter = temp_hour + 100 + 15
 
-            if plus_quarter > 2400:
-                plus_quarter = str(plus_quarter - 2400) + "_tomorrow"
+            if last_quarter > 2400:
+                last_quarter = str(last_quarter - 2400) + "_tomorrow"
             if plus_half > 2400:
                 plus_half = str(plus_half - 2400) + "_tomorrow"
             if plus_three_quarter > 2400:
@@ -83,49 +83,50 @@ def get_15_min_list():
             if plus_full > 2400:
                 plus_full = str(plus_full - 2400)  + "_tomorrow"
 
+            date_times.append(str(last_quarter))
             date_times.append(str(plus_half))
             date_times.append(str(plus_three_quarter))
             date_times.append(str(plus_full))
-            date_times.append(str(plus_quarter))
 
         if starting_minute >= 30 and starting_minute < 45: # if we are in the third quarter of the day
+            last_half = temp_hour + 30
             plus_three_quarter = temp_hour + 45 # the first time we want to schedule the output for is at quarter to the next hour
             plus_full = temp_hour + 100
             plus_quarter = temp_hour + 100 + 15
-            plus_half = temp_hour + 100 + 30
+
             if plus_quarter > 2400:
                 plus_quarter = str(plus_quarter - 2400) + "_tomorrow"
-            if plus_half > 2400:
-                plus_half = str(plus_half - 2400) + "_tomorrow"
+            if last_half > 2400:
+                last_half = str(last_half - 2400) + "_tomorrow"
             if plus_three_quarter > 2400:
                 plus_three_quarter = str(plus_three_quarter - 2400)  + "_tomorrow"
             if plus_full > 2400:
                 plus_full = str(plus_full - 2400)  + "_tomorrow"
 
+            date_times.append(str(last_half))
             date_times.append(str(plus_three_quarter))
             date_times.append(str(plus_full))
             date_times.append(str(plus_quarter))
-            date_times.append(str(plus_half))
 
         if starting_minute >= 45: # if we are in the final quarter of the hour at run time
+            last_three_quarter = temp_hour + 45
             plus_full = temp_hour + 100 # the first time we want to schedule for is the start of the next hour
             plus_quarter = temp_hour + 100 + 15
             plus_half = temp_hour + 100 + 30
-            plus_three_quarter = temp_hour + 100 + 45
 
             if plus_quarter > 2400:
                 plus_quarter = str(plus_quarter - 2400) + "_tomorrow"
             if plus_half > 2400:
                 plus_half = str(plus_half - 2400) + "_tomorrow"
-            if plus_three_quarter > 2400:
-                plus_three_quarter = str(plus_three_quarter - 2400)  + "_tomorrow"
+            if last_three_quarter > 2400:
+                last_three_quarter = str(last_three_quarter - 2400)  + "_tomorrow"
             if plus_full > 2400:
                 plus_full = str(plus_full - 2400)  + "_tomorrow"
 
+            date_times.append(str(last_three_quarter))
             date_times.append(str(plus_full))
             date_times.append(str(plus_quarter))
             date_times.append(str(plus_half))
-            date_times.append(str(plus_three_quarter))
     return(date_times)
 
 def get_price(date_time, import_prices, export_prices):
